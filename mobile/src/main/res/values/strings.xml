@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Copyright (C) 2014 The Android Open Source Project
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  -->
 <resources>
 
-    <string name="app_name">Universal Music Player</string>
+    <string name="app_name">My City Vibes</string>
     <string name="favorite">Favorite</string>
     <string name="error_no_metadata">Unable to retrieve metadata.</string>
-    <string name="browse_genres">Genres</string>
-    <string name="browse_genre_subtitle">Songs by genre</string>
+    <string name="browse_offline">My Selection</string>
+    <string name="browse_offline_catelog">your offline playlist</string>
+    <string name="browse_genres">Music Category</string>
+    <string name="browse_genre_subtitle">Songs by Category</string>
     <string name="browse_musics_by_genre_subtitle">%1$s songs</string>
     <string name="random_queue_title">Random music</string>
     <string name="error_no_connection">Cannot connect to server. Please, check your Internet connectivity.</string>
@@ -43,8 +31,11 @@
     <string name="open_content_drawer">Open the main menu</string>
     <string name="close_content_drawer">Close the main menu</string>
     <string name="placeholder_message">This is a placeholder for your application code.</string>
-    <string name="drawer_allmusic_title">All Music</string>
+    <string name="drawer_allmusic_title">Home</string>
     <string name="drawer_playlists_title">Playlists</string>
+    <string name="drawer_about_title">About</string>
+	<string name="drawer_login_title">Login</string>
+	<string name="drawer_help_title">Help</string>
     <string name="now_playing">Now Playing</string>
     <string name="background_image_str">Background image for album art</string>
     <string name="search_queue_title">Search results</string>
