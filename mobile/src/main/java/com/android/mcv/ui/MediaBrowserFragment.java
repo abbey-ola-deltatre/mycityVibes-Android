@@ -30,6 +30,8 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -142,6 +144,12 @@ public class MediaBrowserFragment extends Fragment {
         // If used on an activity that doesn't implement MediaFragmentListener, it
         // will throw an exception as expected:
         mMediaFragmentListener = (MediaFragmentListener) activity;
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //inflater.inflate(R.menu.menu_sample, menu);
+        menu.add("Download Show");
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override

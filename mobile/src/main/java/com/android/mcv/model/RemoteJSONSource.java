@@ -41,8 +41,7 @@ public class RemoteJSONSource implements MusicProviderSource {
 
     private static final String TAG = LogHelper.makeLogTag(RemoteJSONSource.class);
 
-    protected static final String CATALOG_URL = "http://9jacarwash.com/androidV.json";
-        //"http://storage.googleapis.com/automotive-media/music.json";
+    protected static final String CATALOG_URL = "http://mycityvibes.net/androidV.json";
 
     private static final String JSON_MUSIC = "music";
     private static final String JSON_TITLE = "title";
@@ -73,10 +72,13 @@ public class RemoteJSONSource implements MusicProviderSource {
 				}
                 try{
                     JSONArray offtracks =  FullScreenPlayerActivity.offlinejsonTracks;
-                    for (int j = 0; j < offtracks.length(); j++) {
-                        JSONObject json =offtracks.getJSONObject(j);
-                        jsonTracks.put(json);
+                    if (offtracks != null){
+                        for (int j = 0; j < offtracks.length(); j++) {
+                            JSONObject json =offtracks.getJSONObject(j);
+                            jsonTracks.put(json);
+                        }
                     }
+
                 }
                 catch (JSONException e1) {
                     // TODO Auto-generated catch block

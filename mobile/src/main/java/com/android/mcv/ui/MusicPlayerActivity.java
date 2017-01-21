@@ -25,6 +25,7 @@ import android.text.TextUtils;
 
 //import com.android.mcv.R;
 import com.android.mcv.R;
+import com.android.mcv.model.MusicProvider;
 import com.android.mcv.utils.LogHelper;
 import com.google.gson.Gson;
 
@@ -41,7 +42,7 @@ public class MusicPlayerActivity extends BaseActivity
 
     private static final String TAG = LogHelper.makeLogTag(MusicPlayerActivity.class);
     private static final String SAVED_MEDIA_ID="com.android.mcv.MEDIA_ID";
-    private static final String FRAGMENT_TAG = "uamp_list_container";
+    private static final String FRAGMENT_TAG = "mcv_list_container";
 
     public static final String EXTRA_START_FULLSCREEN =
             "com.android.mcv.EXTRA_START_FULLSCREEN";
@@ -56,7 +57,7 @@ public class MusicPlayerActivity extends BaseActivity
         "com.android.mcv.CURRENT_MEDIA_DESCRIPTION";
 
     private Bundle mVoiceSearchParams;
-
+	private MusicProvider mMusicProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class MusicPlayerActivity extends BaseActivity
 
         // Only check if a full screen player is needed on the first time:
         if (savedInstanceState == null) {
+            LogHelper.d(TAG, "Activity onCreate");
             startFullScreenActivityIfNeeded(getIntent());
         }
     }
@@ -106,6 +108,7 @@ public class MusicPlayerActivity extends BaseActivity
             getSupportMediaController().getTransportControls()
                     .playFromMediaId(item.getMediaId(), null);
         } else if (item.isBrowsable()) {
+				LogHelper.d(TAG, "seleeeeeeeee");
             navigateToBrowser(item.getMediaId());
         } else {
             LogHelper.w(TAG, "Ignoring MediaItem that is neither browsable nor playable: ",
@@ -185,7 +188,7 @@ public class MusicPlayerActivity extends BaseActivity
         if (fragment == null) {
             return null;
         }
-		LogHelper.w(TAG, "Activity onCreate",FullScreenPlayerActivity.offlinejsonTracks);
+		LogHelper.w(TAG, "Loggin off",FullScreenPlayerActivity.offlinejsonTracks);
         return fragment.getMediaId();
     }
 

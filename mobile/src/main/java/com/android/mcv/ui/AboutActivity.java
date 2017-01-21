@@ -16,6 +16,7 @@
 package com.android.mcv.ui;
 
 import android.os.Bundle;
+import android.webkit.WebView;
 
 import com.android.mcv.R;
 
@@ -26,11 +27,17 @@ import com.android.mcv.R;
  * are in the navigation drawer.
  */
 public class AboutActivity extends BaseActivity {
+    private static WebView mWebView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+        mWebView = (WebView)findViewById(R.id.about_webview);
+
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.loadUrl("file:///android_asset/about.html");
         initializeToolbar();
 
     }

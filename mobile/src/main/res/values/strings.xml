@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-
+    <string name="coming_soon">This and many new features coming soon</string>
     <string name="app_name">My City Vibes</string>
     <string name="favorite">Favorite</string>
     <string name="error_no_metadata">Unable to retrieve metadata.</string>

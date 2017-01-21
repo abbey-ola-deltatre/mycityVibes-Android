@@ -104,7 +104,7 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
                         activityClass = HelpActivity.class;
                         break;
                     case R.id.navigation_login:
-                       // activityClass = AboutActivity.class;
+                        activityClass = LoginActivity.class;
                         break;
                 }
                 if (activityClass != null) {
@@ -290,6 +290,9 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
         }
         else if (HelpActivity.class.isAssignableFrom(getClass())) {
             navigationView.setCheckedItem(R.id.navigation_help);
+        }
+        else if (LoginActivity.class.isAssignableFrom(getClass())) {
+            navigationView.setCheckedItem(R.id.navigation_login);
         }
     }
 

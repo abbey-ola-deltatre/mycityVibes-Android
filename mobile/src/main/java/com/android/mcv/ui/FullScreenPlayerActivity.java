@@ -42,6 +42,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.mcv.model.MusicProvider;
 import com.android.mcv.R;
 import com.android.mcv.model.RemoteJSONSource;
 import com.android.mcv.AlbumArtCache;
@@ -103,7 +104,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
 	private String source;
     private final Handler mHandler = new Handler();
     private MediaBrowserCompat mMediaBrowser;
-
+	private MusicProvider mMusicProvider;
     private final Runnable mUpdateProgressTask = new Runnable() {
         @Override
         public void run() {
@@ -153,7 +154,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_player);
         initializeToolbar();
-
+        LogHelper.e(TAG, "Fullscreen", "could not connect media controller");
         final ImageButton loveButton = (ImageButton) findViewById(R.id.loveButton);
 		if (loveButton != null)
 		{
@@ -197,7 +198,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
 								if(dTitle.equals(title) && dArtist.equals(artist) && dAlbum.equals(album)){
 									source = json.getString("source");
 									musicfile = json.getString("musicfile");
-									json.put("genre", "offline");
+									json.put("genre", "Offline");
 									json.put("source", PATH + musicfile);
 									offlinejsonTracks.put(json);
 								}
@@ -542,7 +543,15 @@ class MusicDownloader extends AsyncTask<String, Void, Void>
         } catch (IOException e) {
             LogHelper.d("MusicDownloader", "Error: " + e);
         }
+		MusicProvider mMusicProvider = new MusicProvider();
+
+//		// To make the app more responsive, fetch and cache catalog information now.
+//		// This can help improve the response time in the method
+//		// {@link #onLoadChildren(String, Result<List<MediaItem>>) onLoadChildren()}.
+//		mMusicProvider.retrieveMediaAsync(null /* Callback */);
+//		//MediaSessionCompat mSession = new MediaSessionCompat(this, "MusicService");
+
+        //\mMusicProvider.retrieveMediaAsync(null);
 		return null;
     }
-
 }
