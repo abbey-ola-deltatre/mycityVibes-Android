@@ -15,10 +15,14 @@
  */
 package com.android.mcv.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +33,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +43,15 @@ import com.android.mcv.AlbumArtCache;
 import com.android.mcv.MusicService;
 //import com.android.mcv.R;
 import com.android.mcv.R;
+import com.android.mcv.model.RemoteJSONSource;
 import com.android.mcv.utils.LogHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A class that shows the Media Queue to the user.
@@ -48,6 +61,7 @@ public class PlaybackControlsFragment extends Fragment {
     private static final String TAG = LogHelper.makeLogTag(PlaybackControlsFragment.class);
 
     private ImageButton mPlayPause;
+	private ImageButton mloveButton;
     private TextView mTitle;
     private TextView mSubtitle;
     private TextView mExtraInfo;
@@ -77,11 +91,17 @@ public class PlaybackControlsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_playback_controls, container, false);
 
         mPlayPause = (ImageButton) rootView.findViewById(R.id.play_pause);
         mPlayPause.setEnabled(true);
         mPlayPause.setOnClickListener(mButtonListener);
+
+		mloveButton = (ImageButton) rootView.findViewById(R.id.heartMusic);
+		mloveButton.setEnabled(true);
+		mloveButton.setOnClickListener(mloveitDialog);
+
 
         mTitle = (TextView) rootView.findViewById(R.id.title);
         mSubtitle = (TextView) rootView.findViewById(R.id.artist);
@@ -258,6 +278,51 @@ public class PlaybackControlsFragment extends Fragment {
             }
         }
     };
+
+	private final View.OnClickListener mloveitDialog = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			LogHelper.d(TAG, "I love it");
+//			AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+//			alertDialog.setTitle("Alert");
+//			alertDialog.setMessage("Alert message to be shown");
+//			//RadioButton rd2 = (RadioButton) dialog.findViewById(R.id.rd_2);
+//			//Button loveit = (Button) alertDialog.findViewById(R.id.downloadit);
+//			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "download",
+//					new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog, int which) {
+//							dialog.dismiss();
+//						}
+//					});
+//			alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//					new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog, int which) {
+//							dialog.dismiss();
+//						}
+//					});
+//			alertDialog.show();
+			final Dialog dialog = new Dialog(getContext());
+			dialog.setContentView(R.layout.downlod_dialog);
+			dialog.setTitle("Title...");
+
+			// set the custom dialog components - text, image and button
+			TextView text = (TextView) dialog.findViewById(R.id.text);
+			text.setText("So you love this track? You can save track for offline use or share with your friends on facebook");
+			ImageView image = (ImageView) dialog.findViewById(R.id.image);
+			image.setImageResource(R.drawable.ic_launcher);
+
+			//Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+			// if button is clicked, close the custom dialog
+//			dialogButton.setOnClickListener(new View.OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					dialog.dismiss();
+//				}
+//			});
+
+			dialog.show();
+		}
+	};
 
     private void playMedia() {
         MediaControllerCompat controller = ((FragmentActivity) getActivity())
