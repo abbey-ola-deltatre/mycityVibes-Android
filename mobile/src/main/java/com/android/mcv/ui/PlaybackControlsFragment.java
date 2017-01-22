@@ -345,7 +345,7 @@ public class PlaybackControlsFragment extends Fragment {
 						String nartist =  " "+ npartist;
 						//LogHelper.w(TAG, "love Button", title + album + artist);
 						if(nTitle.equals(title) && nartist.equals(artist)){
-							Toast.makeText(getContext(), mArtUrl,
+							Toast.makeText(getContext(), title + " will be added to offline",
 									Toast.LENGTH_LONG).show();
 							source = json.getString("source");
 							musicfile = json.getString("musicfile");
