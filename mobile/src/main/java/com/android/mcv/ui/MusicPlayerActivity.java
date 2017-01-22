@@ -23,13 +23,14 @@ import android.provider.MediaStore;
 import android.support.v4.media.MediaBrowserCompat;
 import android.text.TextUtils;
 
-//import com.android.mcv.R;
 import com.android.mcv.R;
 import com.android.mcv.model.MusicProvider;
 import com.android.mcv.utils.LogHelper;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+
+//import com.android.mcv.R;
 
 /**
  * Main activity for the music player.
@@ -41,7 +42,7 @@ public class MusicPlayerActivity extends BaseActivity
         implements MediaBrowserFragment.MediaFragmentListener {
 
     private static final String TAG = LogHelper.makeLogTag(MusicPlayerActivity.class);
-    private static final String SAVED_MEDIA_ID="com.android.mcv.MEDIA_ID";
+    private static final String SAVED_MEDIA_ID = "com.android.mcv.MEDIA_ID";
     private static final String FRAGMENT_TAG = "mcv_list_container";
 
     public static final String EXTRA_START_FULLSCREEN =
@@ -54,10 +55,10 @@ public class MusicPlayerActivity extends BaseActivity
      * while the {@link android.support.v4.media.session.MediaControllerCompat} is connecting.
      */
     public static final String EXTRA_CURRENT_MEDIA_DESCRIPTION =
-        "com.android.mcv.CURRENT_MEDIA_DESCRIPTION";
+            "com.android.mcv.CURRENT_MEDIA_DESCRIPTION";
 
     private Bundle mVoiceSearchParams;
-	private MusicProvider mMusicProvider;
+    private MusicProvider mMusicProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,20 +69,19 @@ public class MusicPlayerActivity extends BaseActivity
 
         initializeToolbar();
         initializeFromParams(savedInstanceState, getIntent());
-		if (FullScreenPlayerActivity.offlinejsonTracks ==null) FullScreenPlayerActivity.offlinejsonTracks= new JSONArray();
+        if (FullScreenPlayerActivity.offlinejsonTracks == null)
+            FullScreenPlayerActivity.offlinejsonTracks = new JSONArray();
         Gson gson = new Gson();
-       TinyDB tinyDB = new TinyDB(getApplicationContext());
-		String offMusic = tinyDB.getString("offMusic");
+        TinyDB tinyDB = new TinyDB(getApplicationContext());
+        String offMusic = tinyDB.getString("offMusic");
 
-		try {
-
-			JSONArray obj = new JSONArray(offMusic);
-			FullScreenPlayerActivity.offlinejsonTracks = obj;
-
-		} catch (Throwable tx) {
-			LogHelper.w("My App", "Could not parse malformed JSON: \"" + offMusic + "\"");
-		}
-		OfflineStore.yam = tinyDB.getString("yam");
+        try {
+            JSONArray obj = new JSONArray(offMusic);
+            FullScreenPlayerActivity.offlinejsonTracks = obj;
+        } catch (Throwable tx) {
+            LogHelper.w("My App", "Could not parse malformed JSON: \"" + offMusic + "\"");
+        }
+        OfflineStore.yam = tinyDB.getString("yam");
 //		LogHelper.w(TAG, "Activity onCreate",FullScreenPlayerActivity.offlinejsonTracks);
 
         // Only check if a full screen player is needed on the first time:
@@ -93,7 +93,7 @@ public class MusicPlayerActivity extends BaseActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-		String FILENAME = "myfile";
+        String FILENAME = "myfile";
         String mediaId = getMediaId();
         if (mediaId != null) {
             outState.putString(SAVED_MEDIA_ID, mediaId);
@@ -108,7 +108,7 @@ public class MusicPlayerActivity extends BaseActivity
             getSupportMediaController().getTransportControls()
                     .playFromMediaId(item.getMediaId(), null);
         } else if (item.isBrowsable()) {
-				LogHelper.d(TAG, "seleeeeeeeee");
+            LogHelper.d(TAG, "seleeeeeeeee");
             navigateToBrowser(item.getMediaId());
         } else {
             LogHelper.w(TAG, "Ignoring MediaItem that is neither browsable nor playable: ",
@@ -135,10 +135,10 @@ public class MusicPlayerActivity extends BaseActivity
     private void startFullScreenActivityIfNeeded(Intent intent) {
         if (intent != null && intent.getBooleanExtra(EXTRA_START_FULLSCREEN, false)) {
             Intent fullScreenIntent = new Intent(this, FullScreenPlayerActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
-                    Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                .putExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION,
-                    intent.getParcelableExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION));
+                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    .putExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION,
+                            intent.getParcelableExtra(EXTRA_CURRENT_MEDIA_DESCRIPTION));
             startActivity(fullScreenIntent);
         }
     }
@@ -149,10 +149,10 @@ public class MusicPlayerActivity extends BaseActivity
         // (which contain the query details) in a parameter, so we can reuse it later, when the
         // MediaSession is connected.
         if (intent.getAction() != null
-            && intent.getAction().equals(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH)) {
+                && intent.getAction().equals(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH)) {
             mVoiceSearchParams = intent.getExtras();
             LogHelper.d(TAG, "Starting from voice search query=",
-                mVoiceSearchParams.getString(SearchManager.QUERY));
+                    mVoiceSearchParams.getString(SearchManager.QUERY));
         } else {
             if (savedInstanceState != null) {
                 // If there is a saved media ID, use it
@@ -171,8 +171,8 @@ public class MusicPlayerActivity extends BaseActivity
             fragment.setMediaId(mediaId);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.setCustomAnimations(
-                R.animator.slide_in_from_right, R.animator.slide_out_to_left,
-                R.animator.slide_in_from_left, R.animator.slide_out_to_right);
+                    R.animator.slide_in_from_right, R.animator.slide_out_to_left,
+                    R.animator.slide_in_from_left, R.animator.slide_out_to_right);
             transaction.replace(R.id.container, fragment, FRAGMENT_TAG);
             // If this is not the top level media (root), we add it to the fragment back stack,
             // so that actionbar toggle and Back will work appropriately:
@@ -188,7 +188,7 @@ public class MusicPlayerActivity extends BaseActivity
         if (fragment == null) {
             return null;
         }
-		LogHelper.w(TAG, "Loggin off",FullScreenPlayerActivity.offlinejsonTracks);
+        LogHelper.w(TAG, "Loggin off", FullScreenPlayerActivity.offlinejsonTracks);
         return fragment.getMediaId();
     }
 
