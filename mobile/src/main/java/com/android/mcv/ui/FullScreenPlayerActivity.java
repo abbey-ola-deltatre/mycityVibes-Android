@@ -543,15 +543,6 @@ class MusicDownloader extends AsyncTask<String, Void, Void>
         } catch (IOException e) {
             LogHelper.d("MusicDownloader", "Error: " + e);
         }
-		MusicProvider mMusicProvider = new MusicProvider();
-
-//		// To make the app more responsive, fetch and cache catalog information now.
-//		// This can help improve the response time in the method
-//		// {@link #onLoadChildren(String, Result<List<MediaItem>>) onLoadChildren()}.
-//		mMusicProvider.retrieveMediaAsync(null /* Callback */);
-//		//MediaSessionCompat mSession = new MediaSessionCompat(this, "MusicService");
-
-        //\mMusicProvider.retrieveMediaAsync(null);
 		return null;
     }
 }

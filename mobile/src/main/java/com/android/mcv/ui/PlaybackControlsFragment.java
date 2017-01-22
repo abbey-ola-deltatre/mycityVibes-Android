@@ -26,6 +26,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -62,11 +63,17 @@ public class PlaybackControlsFragment extends Fragment {
 
     private ImageButton mPlayPause;
 	private ImageButton mloveButton;
+	private ImageButton mdownloadtrack;
     private TextView mTitle;
     private TextView mSubtitle;
     private TextView mExtraInfo;
     private ImageView mAlbumArt;
     private String mArtUrl;
+	private MediaBrowserCompat mMediaBrowser;
+	private final String PATH = "/data/data/com.android.mcv/";  //put the downloaded file here
+	private String musicfile;
+	private String mCurrentArtUrl;
+	private String source;
     // Receive callbacks from the MediaController. Here we update our state such as which queue
     // is being shown, the current title and description and the PlaybackState.
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
@@ -102,11 +109,13 @@ public class PlaybackControlsFragment extends Fragment {
 		mloveButton.setEnabled(true);
 		mloveButton.setOnClickListener(mloveitDialog);
 
-
         mTitle = (TextView) rootView.findViewById(R.id.title);
         mSubtitle = (TextView) rootView.findViewById(R.id.artist);
         mExtraInfo = (TextView) rootView.findViewById(R.id.extra_info);
         mAlbumArt = (ImageView) rootView.findViewById(R.id.album_art);
+
+
+
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -282,25 +291,6 @@ public class PlaybackControlsFragment extends Fragment {
 	private final View.OnClickListener mloveitDialog = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			LogHelper.d(TAG, "I love it");
-//			AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-//			alertDialog.setTitle("Alert");
-//			alertDialog.setMessage("Alert message to be shown");
-//			//RadioButton rd2 = (RadioButton) dialog.findViewById(R.id.rd_2);
-//			//Button loveit = (Button) alertDialog.findViewById(R.id.downloadit);
-//			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "download",
-//					new DialogInterface.OnClickListener() {
-//						public void onClick(DialogInterface dialog, int which) {
-//							dialog.dismiss();
-//						}
-//					});
-//			alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-//					new DialogInterface.OnClickListener() {
-//						public void onClick(DialogInterface dialog, int which) {
-//							dialog.dismiss();
-//						}
-//					});
-//			alertDialog.show();
 			final Dialog dialog = new Dialog(getContext());
 			dialog.setContentView(R.layout.downlod_dialog);
 			dialog.setTitle("Title...");
@@ -311,16 +301,71 @@ public class PlaybackControlsFragment extends Fragment {
 			ImageView image = (ImageView) dialog.findViewById(R.id.image);
 			image.setImageResource(R.drawable.ic_launcher);
 
-			//Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-			// if button is clicked, close the custom dialog
-//			dialogButton.setOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					dialog.dismiss();
-//				}
-//			});
-
+			mdownloadtrack = (ImageButton) dialog.findViewById(R.id.download_button);
+			mdownloadtrack.setEnabled(true);
+			mdownloadtrack.setOnClickListener(mloveitkeepit);
 			dialog.show();
+		}
+	};
+
+	private final View.OnClickListener mloveitkeepit = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			LogHelper.d(TAG, "yeah yeah yeah yeah");
+//			MediaControllerCompat mediaController = null;
+//			try {
+//				mediaController = new MediaControllerCompat(
+//						getActivity(), mMediaBrowser.getSessionToken());
+//			} catch (RemoteException e) {
+//				e.printStackTrace();
+//			}
+//
+//			String str = String.valueOf(mediaController.getMetadata().getDescription());
+//
+//			List<String> currentTrack = Arrays.asList(str.split(","));
+//
+//			String dTitle = currentTrack.get(0);
+//			String dArtist = currentTrack.get(1);
+//			String dAlbum = currentTrack.get(2);
+//			LogHelper.w(TAG, "love Button", dAlbum);
+
+			if (RemoteJSONSource.jsonTracks != null) {
+				JSONObject list1 = new JSONObject();
+				if (FullScreenPlayerActivity.offlinejsonTracks ==null) FullScreenPlayerActivity.offlinejsonTracks= new JSONArray();
+				try{
+					for (int j = 0; j < RemoteJSONSource.jsonTracks.length(); j++) {
+						JSONObject json = RemoteJSONSource.jsonTracks.getJSONObject(j);
+						String title = json.getString("title");
+						String artistTemp = json.getString("artist");
+						String albumTemp = json.getString("genre");
+						String artist = " "+ artistTemp;
+						String album = " "+ albumTemp;
+						String nTitle = (String) mTitle.getText();
+						String npartist = (String) mSubtitle.getText();
+						String nartist =  " "+ npartist;
+						//LogHelper.w(TAG, "love Button", title + album + artist);
+						if(nTitle.equals(title) && nartist.equals(artist)){
+							Toast.makeText(getContext(), mArtUrl,
+									Toast.LENGTH_LONG).show();
+							source = json.getString("source");
+							musicfile = json.getString("musicfile");
+							json.put("genre", "Offline");
+							json.put("source", PATH + musicfile);
+							FullScreenPlayerActivity.offlinejsonTracks.put(json);
+						}
+					}
+				}
+				catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				new MusicDownloader().execute(source, PATH+musicfile);
+
+				String offstr = FullScreenPlayerActivity.offlinejsonTracks.toString();
+				TinyDB tinyDB = new TinyDB(getContext());
+				tinyDB.putString("offMusic", offstr);
+				LogHelper.w(TAG,"jsonCars = " + FullScreenPlayerActivity.offlinejsonTracks);
+			}
 		}
 	};
 
@@ -340,3 +385,4 @@ public class PlaybackControlsFragment extends Fragment {
         }
     }
 }
+
