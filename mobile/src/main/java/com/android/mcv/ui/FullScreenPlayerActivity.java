@@ -443,42 +443,4 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mSeekbar.setProgress((int) currentPosition);
     }
 }
-class MusicDownloader extends AsyncTask<String, Void, Void>
-{
 
-    @Override
-    protected Void doInBackground(String... params) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                .permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        try {
-            URL url = new URL(params[0]);
-            File file = new File(params[1]);
-
-            long startTime = System.currentTimeMillis();
-
-            URLConnection ucon = url.openConnection();
-
-            InputStream is = ucon.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            byte[] data = new byte[50];
-            int current = 0;
-
-            while((current = bis.read(data,0,data.length)) != -1){
-                buffer.write(data,0,current);
-            }
-
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(buffer.toByteArray());
-            fos.close();
-            LogHelper.d("Music", "download ready in"
-                    + ((System.currentTimeMillis() - startTime) / 1000)
-                    + " sec");
-        } catch (IOException e) {
-            LogHelper.d("MusicDownloader", "Error: " + e);
-        }
-		return null;
-    }
-}
