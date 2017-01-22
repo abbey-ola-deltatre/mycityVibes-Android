@@ -368,7 +368,7 @@ public class PlaybackControlsFragment extends Fragment {
 							JSONObject json = FullScreenPlayerActivity.offlinejsonTracks.getJSONObject(j);
 							String title = json.getString("title");
 							String artistTemp = json.getString("artist");
-
+							String musicfile = json.getString("musicfile");
 							String artist = " "+ artistTemp;
 							String nTitle = (String) mTitle.getText();
 							String npartist = (String) mSubtitle.getText();
@@ -376,9 +376,12 @@ public class PlaybackControlsFragment extends Fragment {
 							if(nTitle.equals(title) && nartist.equals(artist)){
 								FullScreenPlayerActivity.offlinejsonTracks.remove(j);
 								String offstr = FullScreenPlayerActivity.offlinejsonTracks.toString();
-							TinyDB tinyDB = new TinyDB(getContext());
-							tinyDB.putString("offMusic", offstr);
-								LogHelper.w(TAG,"jsonCars = " + FullScreenPlayerActivity.offlinejsonTracks);
+
+								TinyDB tinyDB = new TinyDB(getContext());
+							    tinyDB.putString("offMusic", offstr);
+
+								File fileD = new File(PATH, musicfile);
+								boolean deleted = fileD.delete();
 							}
 						}
 					}
