@@ -16,7 +16,7 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.mcv" >
+    package="com.bridge.mcv" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -38,7 +38,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/UAmpAppTheme"
-        android:banner="@drawable/banner_tv">
+        android:banner="@drawable/banner_tv"
+		android:name=".MyCityVibesApp">
 
         <meta-data
             android:name="com.google.android.gms.car.application"
@@ -49,7 +50,7 @@
 
         <!-- Main activity for music browsing on phone -->
         <activity
-            android:name=".ui.MusicPlayerActivity"
+            android:name="com.bridge.mcv.ui.MusicPlayerActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,19 +66,19 @@
 
         <!-- Placeholder activity for phone UI -->
         <activity
-            android:name=".ui.AboutActivity"
+            android:name="com.bridge.mcv.ui.AboutActivity"
 			android:configChanges="orientation"
 			android:screenOrientation="portrait"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".ui.HelpActivity"
+            android:name="com.bridge.mcv.ui.HelpActivity"
 			android:configChanges="orientation"
 			android:screenOrientation="portrait"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.bridge.mcv.ui.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
@@ -86,7 +87,7 @@
         <!-- Proxy activity that opens either the NowPlaying TV or the mobile UI, depending on
         the current environment -->
         <activity
-            android:name=".ui.NowPlayingActivity"
+            android:name="com.bridge.mcv.ui.NowPlayingActivity"
 			android:configChanges="orientation"
 			android:screenOrientation="portrait"
             android:icon="@drawable/ic_launcher">
@@ -94,7 +95,7 @@
 
         <!-- Main activity for Android TV user interface -->
         <activity
-            android:name=".ui.tv.TvBrowseActivity"
+            android:name="com.bridge.mcv.ui.tv.TvBrowseActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.UAmp.TVLeanback" >
             <intent-filter>
@@ -104,15 +105,15 @@
         </activity>
 
         <activity
-            android:name=".ui.tv.TvVerticalGridActivity"
+            android:name="com.bridge.mcv.ui.tv.TvVerticalGridActivity"
             android:theme="@style/Theme.UAmp.TVLeanback"
-            android:parentActivityName=".ui.tv.TvBrowseActivity" />
+            android:parentActivityName="com.bridge.mcv.ui.tv.TvBrowseActivity" />
 
         <!-- Android TV UI when playing a song -->
         <activity
-            android:name=".ui.tv.TvPlaybackActivity"
+            android:name="com.bridge.mcv.ui.tv.TvPlaybackActivity"
             android:theme="@style/Theme.UAmp.TVLeanback"
-            android:parentActivityName=".ui.tv.TvBrowseActivity" />
+            android:parentActivityName="com.bridge.mcv.ui.tv.TvBrowseActivity" />
 
         <!--
              (OPTIONAL) use this meta data to indicate which icon should be
@@ -146,7 +147,7 @@
          consumers through MediaBrowserService and MediaSession. Consumers connect to it through
          MediaBrowser (for browsing) and MediaController (for play session control) -->
         <service
-            android:name=".MusicService"
+            android:name="com.bridge.mcv.MusicService"
             android:exported="true"
             tools:ignore="ExportedService">
             <intent-filter>
@@ -159,18 +160,18 @@
         -->
         <meta-data
             android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-            android:value="com.android.mcv.CastOptionsProvider" />
+            android:value="com.bridge.mcv.CastOptionsProvider" />
 
         <!-- A full screen activity showing controls and a seek bar for
              the current playing music -->
         <activity
-            android:name=".ui.FullScreenPlayerActivity"
+            android:name="com.bridge.mcv.ui.FullScreenPlayerActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.MusicPlayerActivity">
+            android:parentActivityName="com.bridge.mcv.ui.MusicPlayerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MusicPlayerActivity"/>
+                android:value="com.bridge.mcv.ui.MusicPlayerActivity"/>
         </activity>
 
         <!-- A receiver that will receive media buttons and send as

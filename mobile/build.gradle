@@ -20,12 +20,14 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.android.mcv"
+        applicationId "com.bridge.mcv"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 2
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [onesignal_app_id: "ad2e214f-9e05-498e-86e9-a706120c84c4",
+                                onesignal_google_project_number: "REMOTE"]
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -49,6 +51,10 @@ repositories {
 }
 
 dependencies {
+    // Required for geotagging
+    compile "com.google.android.gms:play-services-location:9.4.0"
+    compile 'com.onesignal:OneSignal:3.4.3@aar'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
     compile files('libs/gson-2.4.jar')
     compile 'com.google.android.gms:play-services-cast-framework:9.4.0'
     compile 'com.google.android.support:wearable:1.3.0'
@@ -64,3 +70,4 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.4.1'
     androidTestCompile 'com.android.support.test:rules:0.4.1'
 }
+apply plugin: 'com.google.gms.google-services'
