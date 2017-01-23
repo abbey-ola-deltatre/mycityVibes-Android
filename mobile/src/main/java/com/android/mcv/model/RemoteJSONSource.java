@@ -112,15 +112,6 @@ public class RemoteJSONSource implements MusicProviderSource {
 
         LogHelper.d(TAG, "Found music track: ", json);
 
-        // Media is stored relative to JSON file
-//        if (!source.startsWith("http"))
-//        {
-//            source = basePath + "trending" + source;
-//        }
-//        if (!iconUrl.startsWith("http")) {
-//            iconUrl = basePath + "pictures" +
-//                    "" + iconUrl;
-//        }
         // Since we don't have a unique ID in the server, we fake one using the hashcode of
         // the music source. In a real world app, this could come from the server.
         String id = String.valueOf(source.hashCode());

@@ -98,8 +98,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private ImageView mBackgroundImage;
     private MediaDescriptionCompat currentPlaying;
     private MediaMetadataCompat metadata2;
-	private final String PATH = "/data/data/com.android.mcv/";  //put the downloaded file here
-    private String musicfile;
+
 	private String mCurrentArtUrl;
 	private String source;
     private final Handler mHandler = new Handler();

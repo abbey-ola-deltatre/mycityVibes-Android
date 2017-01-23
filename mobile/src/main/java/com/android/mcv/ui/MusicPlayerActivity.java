@@ -82,9 +82,6 @@ public class MusicPlayerActivity extends BaseActivity
 			LogHelper.w("My App", "Could not parse malformed JSON: \"" + offMusic + "\"");
 		}
 		OfflineStore.yam = tinyDB.getString("yam");
-//		LogHelper.w(TAG, "Activity onCreate",FullScreenPlayerActivity.offlinejsonTracks);
-
-        // Only check if a full screen player is needed on the first time:
         if (savedInstanceState == null) {
             LogHelper.d(TAG, "Activity onCreate");
             startFullScreenActivityIfNeeded(getIntent());

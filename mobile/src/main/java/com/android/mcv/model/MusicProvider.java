@@ -233,34 +233,6 @@ public class MusicProvider extends ArrayList<MediaMetadataCompat>
      * Get the list of music tracks from a server and caches the track information
      * for future reference, keying tracks by musicId and grouping by genre.
      */
-//    public void retrieveMediaAsync(final Callback callback) {
-//        LogHelper.d(TAG, "retrieveMediaAsync called");
-//        if (mCurrentState == State.INITIALIZED) {
-//            if (callback != null) {
-//                // Nothing to do, execute callback immediately
-//                //callback.onMusicCatalogReady(true);
-//				//callback.children();
-//            }
-//            return;
-//        }
-//
-//        // Asynchronously load the music catalog in a separate thread
-//        new AsyncTask<Void, Void, State>() {
-//            @Override
-//            protected State doInBackground(Void... params) {
-//                retrieveMedia();
-//                return mCurrentState;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(State current) {
-//                if (callback != null) {
-//                    callback.onMusicCatalogReady(current == State.INITIALIZED);
-//                }
-//            }
-//        }.execute();
-//    }
-
     private synchronized void buildListsByGenre() {
         ConcurrentMap<String, List<MediaMetadataCompat>> newMusicListByGenre = new ConcurrentHashMap<>();
 
@@ -301,69 +273,6 @@ public class MusicProvider extends ArrayList<MediaMetadataCompat>
         }
     }
 
-//	public synchronized void getChildrenAsync(final String mediaId, final Resources resources, final k callback){
-//		final List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
-//
-//		if (!MediaIDHelper.isBrowseable(mediaId)) {
-//			callback.children(mediaItems);
-//		}
-//		else if (MEDIA_ID_ROOT.equals(mediaId)) {
-//
-//			// Asynchronously load the years in a separate thread
-//			new AsyncTask<Void, Void, State>() {
-//				@Override
-//				protected State doInBackground(Void... params) {
-//					//List<YearData> years = mSource.years();  //always refresh years so we get fresh show count
-//					Iterator<MediaMetadataCompat> tracks = mSource.iterator();
-//					mMusicListByGenre = new ConcurrentHashMap<>();  //clear cache if number of shows have changed
-//
-//
-//					//mYears = years;
-//
-//					for (String genre : getGenres()) {
-//						mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
-//					}
-//					return null;
-//				}
-//
-//				@Override
-//				protected void onPostExecute(State current) {
-//					if (callback != null) {
-//						callback.children(mediaItems);
-//					}
-//				}
-//			}.execute();
-//		}
-//		else if (MEDIA_ID_MUSICS_BY_GENRE.equals(mediaId)) {
-//			LogHelper.w(TAG, "lingbling: ", mediaId);
-//			for (String genre : getGenres()) {
-//				mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
-//			}
-//
-//		} else if (mediaId.startsWith(MEDIA_ID_MUSICS_BY_GENRE)) {
-//			new MusicService();
-//			LogHelper.w(TAG, "blablablabla: ", mediaId);
-//
-//			String genre = MediaIDHelper.getHierarchy(mediaId)[1];
-//			for (MediaMetadataCompat metadata : getMusicsByGenre(genre)) {
-//				mediaItems.add(createMediaItem(metadata));
-//			}
-//
-//
-//		}
-//		else if (MEDIA_ID_OFFLINE.equals(mediaId)) {
-//			LogHelper.w(TAG, "offfff: ", mediaId);
-//			String genre = MediaIDHelper.getHierarchy("__BY_GENRE__/offline")[1];
-//			for (MediaMetadataCompat metadata : getMusicsByGenre(genre)) {
-//				mediaItems.add(createMediaItem(metadata));
-//			}
-//		}
-//		else {
-//			LogHelper.w(TAG, "Skipping unmatched mediaId: ", mediaId);
-//		}
-//		//return mediaItems;
-//	}
-
     public List<MediaBrowserCompat.MediaItem> getChildren(final String mediaId, final Resources resources, final Callback  callback) {
         final List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
 
@@ -378,7 +287,6 @@ public class MusicProvider extends ArrayList<MediaMetadataCompat>
 				protected State doInBackground(Void... params) {
 					mMusicListByGenre = new ConcurrentHashMap<>();
 					retrieveMedia();
-					LogHelper.w(TAG, "I WANT TO RELOAD DATA HERE: ", mediaId);
 
 					for (String genre : getGenres()) {
 						mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
@@ -389,44 +297,23 @@ public class MusicProvider extends ArrayList<MediaMetadataCompat>
 				@Override
 				protected void onPostExecute(State current) {
 					if (callback != null) {
-						LogHelper.w(TAG, "call back working: ", mediaId);
 						callback.children(mediaItems);
 					}
 				}
 			}.execute();
-//			retrieveMediaAsync(new Callback()
-//			{
-//				@Override
-//				public void children(List<MediaBrowserCompat.MediaItem> mediaItems) {
-//					if (callback != null) {
-//						callback.children(mediaItems);
-//					}
-//				}
-//			});
-//			LogHelper.w(TAG, "I WANT TO RELOAD DATA HERE: ", mediaId);
-//
-//			for (String genre : getGenres()) {
-//				mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
-//			}
-
 		}  else if (MEDIA_ID_MUSICS_BY_GENRE.equals(mediaId)) {
-            //LogHelper.w(TAG, "lingbling: ", getGenres());
             for (String genre : getGenres()) {
                 mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
             }
 
         } else if (mediaId.startsWith(MEDIA_ID_MUSICS_BY_GENRE)) {
 			new MusicService();
-            LogHelper.w(TAG, "blablablabla: ", mediaId);
-
 			new AsyncTask<Void, Void, State>() {
 				@Override
 				protected State doInBackground(Void... params) {
 					retrieveMedia();
-					LogHelper.w(TAG, "I WANT TO RELOAD DATA HERE: ", mediaId);
-
 					String genre = MediaIDHelper.getHierarchy(mediaId)[1];
-					LogHelper.w(TAG, "lingbling: ", getMusicsByGenre(genre));
+
 					for (MediaMetadataCompat metadata : getMusicsByGenre(genre)) {
 						mediaItems.add(createMediaItem(metadata));
 					}
@@ -442,14 +329,6 @@ public class MusicProvider extends ArrayList<MediaMetadataCompat>
 				}
 			}.execute();
 
-
-//            String genre = MediaIDHelper.getHierarchy(mediaId)[1];
-//			LogHelper.w(TAG, "lingbling: ", getMusicsByGenre(genre));
-//            for (MediaMetadataCompat metadata : getMusicsByGenre(genre)) {
-//                mediaItems.add(createMediaItem(metadata));
-//            }
-
-
         }
 		else if (MEDIA_ID_OFFLINE.equals(mediaId)) {
 			LogHelper.w(TAG, "offfff: ", mediaId);
@@ -463,31 +342,6 @@ public class MusicProvider extends ArrayList<MediaMetadataCompat>
         }
         return mediaItems;
     }
-
-    private MediaBrowserCompat.MediaItem createBrowsableMediaItemForRoot(Resources resources) {
-        MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
-                .setMediaId(MEDIA_ID_MUSICS_BY_GENRE)
-                .setTitle(resources.getString(R.string.browse_genres))
-                .setSubtitle(resources.getString(R.string.browse_genre_subtitle))
-                .setIconUri(Uri.parse("android.resource://" +
-                        "com.android.uamp/drawable/ic_by_genre"))
-                .build();
-
-        return new MediaBrowserCompat.MediaItem(description,
-                MediaBrowserCompat.MediaItem.FLAG_BROWSABLE);
-    }
-
-	private MediaBrowserCompat.MediaItem createBrowsableMediaItemForRoot2(Resources resources) {
-		MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
-				.setMediaId(MEDIA_ID_OFFLINE)
-				.setTitle(resources.getString(R.string.browse_offline))
-				.setSubtitle(resources.getString(R.string.browse_offline_catelog))
-				.setIconUri(Uri.parse("www.31stbridge.com/mycityvibes/assets/img/icons.png"))
-				.build();
-
-		return new MediaBrowserCompat.MediaItem(description,
-				MediaBrowserCompat.MediaItem.FLAG_BROWSABLE);
-	}
 
     private MediaBrowserCompat.MediaItem createBrowsableMediaItemForGenre(String genre,
                                                                     Resources resources) {

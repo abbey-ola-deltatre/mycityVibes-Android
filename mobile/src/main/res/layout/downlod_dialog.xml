@@ -23,6 +23,7 @@
 		app:srcCompat="@android:drawable/stat_sys_download"
 		android:layout_marginTop="44dp"
 		android:id="@+id/download_button"
+		android:tint="@color/blue"
 		android:layout_marginStart="13dp"
 		android:layout_below="@+id/image"
 		/>
@@ -54,6 +55,7 @@
 		app:srcCompat="@android:drawable/ic_menu_share"
 		android:layout_marginTop="12dp"
 		android:id="@+id/fbshare_button"
+		android:tint="@color/blue"
 		android:layout_below="@+id/download_text"
 		android:layout_alignStart="@+id/download_button"/>
 
@@ -61,6 +63,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		app:srcCompat="@drawable/lb_ic_thumb_up"
+		android:tint="@color/blue"
 		android:layout_below="@+id/fbshare_button"
 		android:layout_alignStart="@+id/fbshare_button"
 		android:layout_marginBottom="30dp"

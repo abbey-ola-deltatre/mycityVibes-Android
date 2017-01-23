@@ -85,7 +85,7 @@ public class PlaybackControlsFragment extends Fragment {
     private ImageView mAlbumArt;
     private String mArtUrl;
 	private MediaBrowserCompat mMediaBrowser;
-	private final String PATH = "/data/data/com.android.mcv/";  //put the downloaded file here
+	private final String PATH = "/data/data/com.android.mcv/";
 	private String musicfile;
 	private String mCurrentArtUrl;
 	private String source;
