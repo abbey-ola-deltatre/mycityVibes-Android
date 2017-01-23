@@ -35,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
+		android:layout_margin="10dp"
         android:layout_alignParentEnd="true"
         android:background="?selectableItemBackgroundBorderless"
         android:src="@drawable/ic_play_arrow_black_36dp"
@@ -55,7 +56,7 @@
 			tools:text="The Best Music EVAH1111 THE BEST"
 			android:ellipsize="end"
 			android:maxLines="1"
-			android:layout_width="163dp"
+			android:layout_width="150dp"
 			android:layout_height="wrap_content"
 			android:contentDescription="@string/currently_playing_song"
 			android:textAppearance="?android:attr/textAppearanceMedium"
@@ -65,7 +66,7 @@
 			tools:text="John Doe and Band"
 			android:ellipsize="end"
 			android:maxLines="1"
-			android:layout_width="163dp"
+			android:layout_width="150dp"
 			android:layout_height="wrap_content"
 			android:contentDescription="@string/currently_playing_artist"
 			android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -89,7 +90,7 @@
 		app:srcCompat="@drawable/empty_heart"
 		android:tint="@color/orange"
 		android:id="@+id/heartMusic"
-		android:layout_alignTop="@+id/content"
-		android:layout_toEndOf="@+id/content"
-		android:layout_marginStart="13dp"/>
+		android:layout_alignBottom="@+id/album_art"
+		android:layout_alignEnd="@+id/play_pause"
+		android:layout_marginEnd="40dp"/>
 </RelativeLayout>
