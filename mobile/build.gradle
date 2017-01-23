@@ -23,7 +23,7 @@ android {
         applicationId "com.bridge.mcv"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 2
+        versionCode 3
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id: "ad2e214f-9e05-498e-86e9-a706120c84c4",
