@@ -341,8 +341,6 @@ public class PlaybackControlsFragment extends Fragment {
 						String npartist = (String) mSubtitle.getText();
 						String nartist =  " "+ npartist;
 						if(nTitle.equals(title) && nartist.equals(artist)){
-							Toast.makeText(getContext(), title + " will be added to offline",
-									Toast.LENGTH_LONG).show();
 							source = json.getString("video");
 						}
 					}
