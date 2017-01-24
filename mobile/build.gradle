@@ -20,10 +20,10 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.bridge.mcv"
+        applicationId "com.bridge.mycityvibes"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 3
+        versionCode 4
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id: "ad2e214f-9e05-498e-86e9-a706120c84c4",
@@ -43,11 +43,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-	configurations.all {
-		resolutionStrategy {
-			force 'com.android.support:support-annotations:24.2.1'
-		}
-	}
+//	configurations.all {
+//		resolutionStrategy {
+//			force 'com.android.support:support-annotations:24.2.1'
+//		}
+//	}
 }
 
 repositories {
@@ -60,7 +60,7 @@ repositories {
 dependencies {
     // Required for geotagging
 	compile 'com.facebook.android:facebook-android-sdk:4.5.0'
-    compile 'com.facebook.android:audience-network-sdk:4.15.0'
+    compile ('com.facebook.android:audience-network-sdk:4.15.0'){exclude group: "com.google.android.gms"}
     compile "com.google.android.gms:play-services-location:9.4.0"
     compile 'com.onesignal:OneSignal:3.4.3@aar'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'

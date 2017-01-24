@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "933213448500",
-    "firebase_url": "https://my-city-vibes-40301.firebaseio.com",
-    "project_id": "my-city-vibes-40301",
-    "storage_bucket": "my-city-vibes-40301.appspot.com"
+    "project_number": "974215857985",
+    "firebase_url": "https://city-vibes-e64e5.firebaseio.com",
+    "project_id": "city-vibes-e64e5",
+    "storage_bucket": "city-vibes-e64e5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:933213448500:android:043fc3546bb8e303",
+        "mobilesdk_app_id": "1:974215857985:android:ba6d7c755ebeb320",
         "android_client_info": {
-          "package_name": "com.bridge.mcv"
+          "package_name": "com.bridge.mycityvibes"
         }
       },
       "oauth_client": [
         {
-          "client_id": "933213448500-9hg340ulkf1hufvdjgkvph1g2u34hefg.apps.googleusercontent.com",
+          "client_id": "974215857985-cb0esini69g1ng5k3ct81uslakli0190.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyALWoaBXazOpopiJ5w_HA2jes1zDINanuc"
+          "current_key": "AIzaSyABUGxS8N30Hkk42vRSyzAG99-fpWyO0TI"
         }
       ],
       "services": {
