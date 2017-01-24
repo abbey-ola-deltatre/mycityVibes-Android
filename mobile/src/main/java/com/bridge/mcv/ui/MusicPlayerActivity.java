@@ -22,13 +22,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.media.MediaBrowserCompat;
 import android.text.TextUtils;
-
+import com.facebook.ads.*;
 //import com.bridge.mcv.R;
 import com.bridge.mcv.R;
 import com.bridge.mcv.model.MusicProvider;
 import com.bridge.mcv.utils.LogHelper;
 import com.google.gson.Gson;
 
+import android.widget.Toast;
 import org.json.JSONArray;
 
 /**
@@ -40,6 +41,7 @@ import org.json.JSONArray;
 public class MusicPlayerActivity extends BaseActivity
         implements MediaBrowserFragment.MediaFragmentListener {
 
+    private InterstitialAd interstitialAd;
     private static final String TAG = LogHelper.makeLogTag(MusicPlayerActivity.class);
     private static final String SAVED_MEDIA_ID="com.bridge.mcv.MEDIA_ID";
     private static final String FRAGMENT_TAG = "mcv_list_container";
@@ -63,6 +65,43 @@ public class MusicPlayerActivity extends BaseActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogHelper.d(TAG, "Activity onCreate");
+        interstitialAd = new InterstitialAd(this, "786906088117796_809298215878583");
+		//AdSettings.addTestDevice("bd218f5d1c515d3269697b617e6c1918");
+		AdSettings.addTestDevice("d169afd6764e2d50fd22ae6ca3d67614");
+		interstitialAd.setAdListener(new InterstitialAdListener() {
+			@Override
+			public void onInterstitialDisplayed(Ad ad) {
+				// Interstitial displayed callback
+			}
+
+			@Override
+			public void onInterstitialDismissed(Ad ad) {
+				// Interstitial dismissed callback
+			}
+
+			@Override
+			public void onError(Ad ad, AdError adError) {
+				// Ad error callback
+				Toast.makeText(MusicPlayerActivity.this, "Error: " + adError.getErrorMessage(),
+						Toast.LENGTH_LONG).show();
+			}
+
+			@Override
+			public void onAdLoaded(Ad ad) {
+				//AdSettings.addTestDevice("bd218f5d1c515d3269697b617e6c1918");
+				// Show the ad when it's done loading.
+				interstitialAd.show();
+			}
+
+			@Override
+			public void onAdClicked(Ad ad) {
+				// Ad clicked callback
+			}
+		});
+
+		// Load the interstitial ad
+		//AdSettings.addTestDevice("bd218f5d1c515d3269697b617e6c1918");
+		interstitialAd.loadAd();
 
         setContentView(R.layout.activity_player);
 
@@ -86,6 +125,7 @@ public class MusicPlayerActivity extends BaseActivity
             LogHelper.d(TAG, "Activity onCreate");
             startFullScreenActivityIfNeeded(getIntent());
         }
+
     }
 
     @Override
@@ -97,6 +137,13 @@ public class MusicPlayerActivity extends BaseActivity
         }
         super.onSaveInstanceState(outState);
     }
+	@Override
+	protected void onDestroy() {
+		if (interstitialAd != null) {
+			interstitialAd.destroy();
+		}
+		super.onDestroy();
+	}
 
     @Override
     public void onMediaItemSelected(MediaBrowserCompat.MediaItem item) {
