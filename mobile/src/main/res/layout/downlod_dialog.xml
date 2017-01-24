@@ -28,47 +28,46 @@
 		android:layout_below="@+id/image"
 		/>
 
+	<com.facebook.share.widget.ShareButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="30dp"
+		android:layout_marginBottom="20dp"
+		android:id="@+id/fb_share_button"
+		android:layout_below="@+id/download_text"
+		android:layout_alignStart="@+id/download_button"/>
+
+	<com.facebook.share.widget.LikeView
+		android:id="@+id/fblike_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/fb_share_button"
+		android:layout_marginTop="12dp"
+		android:layout_marginBottom="30dp"
+		android:layout_alignStart="@+id/fb_share_button"
+		/>
+
+	<!--<com.facebook.share.internal.LikeButton-->
+		<!--android:layout_width="wrap_content"-->
+		<!--android:layout_height="wrap_content"-->
+		<!--app:srcCompat="@drawable/lb_ic_thumb_up"-->
+		<!--android:tint="@color/blue"-->
+		<!--android:layout_below="@+id/fbshare_button"-->
+		<!--android:layout_alignStart="@+id/fbshare_button"-->
+		<!--android:layout_marginBottom="30dp"-->
+		<!--android:layout_marginTop="12dp"-->
+		<!--android:id="@+id/fblike_button"/>-->
+
 	<TextView
 		android:text="download track"
 		android:textSize="17dp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/download_text"
-		android:layout_alignBottom="@+id/download_button"
-		android:layout_alignStart="@+id/fbshare_text"
-		android:layout_marginBottom="11dp"/>
-
-	<TextView
-		android:text="share on facebook"
-		android:textSize="17dp"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="39dp"
-		android:id="@+id/fbshare_text"
-		android:layout_alignTop="@+id/fbshare_button"
-		android:layout_toEndOf="@+id/fbshare_button"
+		android:layout_alignTop="@+id/download_button"
+		android:layout_toEndOf="@+id/fb_share_button"
+		android:layout_marginStart="37dp"
 		android:layout_marginTop="11dp"/>
-
-	<ImageButton
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		app:srcCompat="@android:drawable/ic_menu_share"
-		android:layout_marginTop="12dp"
-		android:id="@+id/fbshare_button"
-		android:tint="@color/blue"
-		android:layout_below="@+id/download_text"
-		android:layout_alignStart="@+id/download_button"/>
-
-	<LikeView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		app:srcCompat="@drawable/lb_ic_thumb_up"
-		android:tint="@color/blue"
-		android:layout_below="@+id/fbshare_button"
-		android:layout_alignStart="@+id/fbshare_button"
-		android:layout_marginBottom="30dp"
-		android:layout_marginTop="12dp"
-		android:id="@+id/fblike_button"/>
 
 	<TextView
 		android:text="facebook like"
@@ -76,8 +75,17 @@
 		android:layout_height="wrap_content"
 		android:textSize="17dp"
 		android:id="@+id/fblike_text"
-		android:layout_alignBottom="@+id/fblike_button"
-		android:layout_alignStart="@+id/fbshare_text"
-		android:layout_marginBottom="17dp"/>
+		android:layout_alignTop="@+id/fblike_button"
+		android:layout_alignEnd="@+id/download_text"/>
+
+	<TextView
+		android:text="share on facebook"
+		android:textSize="17dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/fbshare_text"
+		android:layout_alignBaseline="@+id/fb_share_button"
+		android:layout_alignBottom="@+id/fb_share_button"
+		android:layout_alignStart="@+id/download_text"/>
 
 </RelativeLayout>
