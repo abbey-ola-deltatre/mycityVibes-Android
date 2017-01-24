@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,6 +63,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.LikeView;
+import com.facebook.share.widget.ShareButton;
+
+import static java.security.AccessController.getContext;
 
 /**
  * A class that shows the Media Queue to the user.
@@ -83,6 +90,7 @@ public class PlaybackControlsFragment extends Fragment {
 	private String musicfile;
 	private String mCurrentArtUrl;
 	private String source;
+	private String youtubeLink;
 	private String mofflineStatus;
 	public static List<String[]> downloadqueue = new ArrayList<String[]>();
 	public static boolean downloadInProgress = false;
@@ -303,6 +311,7 @@ public class PlaybackControlsFragment extends Fragment {
 	private final View.OnClickListener mloveitDialog = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
+
 			final Dialog dialog = new Dialog(getContext());
 			dialog.setContentView(R.layout.downlod_dialog);
 			dialog.setTitle("Title...");
@@ -315,7 +324,46 @@ public class PlaybackControlsFragment extends Fragment {
 			ImageButton downloadBut = (ImageButton) dialog.findViewById(R.id.download_button);
 			TextView downloadText = (TextView) dialog.findViewById(R.id.download_text);
 			mofflineStatus = (String) downloadText.getText();
-			//downloadBut.setImageIcon(R.drawable.delete_icon);
+
+
+			if (RemoteJSONSource.jsonTracks != null) {
+				JSONObject list1 = new JSONObject();
+				if (FullScreenPlayerActivity.offlinejsonTracks ==null) FullScreenPlayerActivity.offlinejsonTracks= new JSONArray();
+				try{
+					for (int j = 0; j < RemoteJSONSource.jsonTracks.length(); j++) {
+						JSONObject json = RemoteJSONSource.jsonTracks.getJSONObject(j);
+						String title = json.getString("title");
+						String artistTemp = json.getString("artist");
+						String albumTemp = json.getString("genre");
+						String artist = " "+ artistTemp;
+						String album = " "+ albumTemp;
+						String nTitle = (String) mTitle.getText();
+						String npartist = (String) mSubtitle.getText();
+						String nartist =  " "+ npartist;
+						if(nTitle.equals(title) && nartist.equals(artist)){
+							Toast.makeText(getContext(), title + " will be added to offline",
+									Toast.LENGTH_LONG).show();
+							source = json.getString("video");
+						}
+					}
+				}
+				catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			LikeView likeView = (LikeView) dialog.findViewById(R.id.fblike_button);
+			likeView.setObjectIdAndType(
+					source,
+					LikeView.ObjectType.PAGE);
+
+			ShareLinkContent content = new ShareLinkContent.Builder()
+					.setContentUrl(Uri.parse(source))
+					.build();
+
+			ShareButton shareButton = (ShareButton) dialog.findViewById(R.id.fb_share_button);
+			shareButton.setShareContent(content);
 
 
 			mdownloadtrack = (ImageButton) dialog.findViewById(R.id.download_button);
@@ -461,6 +509,33 @@ public class PlaybackControlsFragment extends Fragment {
 			new MusicDownloader().execute(source, path);
 		}
 
+	}
+	private final void getcurrentplayingitem(){
+		LogHelper.d("MusicDownloader", "so so so");
+		if (RemoteJSONSource.jsonTracks != null) {
+			LogHelper.d("MusicDownloader", "why ??");
+			try{
+				for (int j = 0; j < RemoteJSONSource.jsonTracks.length(); j++) {
+					JSONObject json = RemoteJSONSource.jsonTracks.getJSONObject(j);
+					String title = json.getString("title");
+					String artistTemp = json.getString("artist");
+					String albumTemp = json.getString("genre");
+					String artist = " "+ artistTemp;
+					String album = " "+ albumTemp;
+					String nTitle = (String)  mTitle.getText();
+					String npartist = (String) mSubtitle.getText();
+					String nartist =  " "+ npartist;
+					if(nTitle.equals(title) && nartist.equals(artist)){
+						youtubeLink = json.getString("site");
+					}
+					LogHelper.d("MusicDownloader", youtubeLink);
+				}
+			}
+			catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 }
 class MusicDownloader extends AsyncTask<String, Void, Void>
