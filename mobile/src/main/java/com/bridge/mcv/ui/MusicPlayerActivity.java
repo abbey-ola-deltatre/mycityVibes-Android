@@ -67,7 +67,7 @@ public class MusicPlayerActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         LogHelper.d(TAG, "Activity onCreate");
         interstitialAd = new InterstitialAd(this, "786906088117796_809298215878583");
-		AdSettings.addTestDevice("bd218f5d1c515d3269697b617e6c1918");
+		//AdSettings.addTestDevice("bd218f5d1c515d3269697b617e6c1918");
 		//AdSettings.addTestDevice("d169afd6764e2d50fd22ae6ca3d67614");
 		interstitialAd.setAdListener(new InterstitialAdListener() {
 			@Override
