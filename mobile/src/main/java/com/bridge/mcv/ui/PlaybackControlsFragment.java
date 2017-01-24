@@ -62,6 +62,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import com.facebook.FacebookSdk;
+import com.facebook.share.widget.LikeView;
 
 /**
  * A class that shows the Media Queue to the user.
@@ -315,6 +317,11 @@ public class PlaybackControlsFragment extends Fragment {
 			ImageButton downloadBut = (ImageButton) dialog.findViewById(R.id.download_button);
 			TextView downloadText = (TextView) dialog.findViewById(R.id.download_text);
 			mofflineStatus = (String) downloadText.getText();
+
+//			LikeView likeView = (LikeView) dialog.findViewById(R.id.fblike_button);
+//			likeView.setObjectIdAndType(
+//					"https://www.facebook.com/FacebookDevelopers",
+//					LikeView.ObjectType.PAGE);
 			//downloadBut.setImageIcon(R.drawable.delete_icon);
 
 
